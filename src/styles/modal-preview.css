@@ -1,0 +1,65 @@
+/* 빌더 프리뷰: 375×680 폰 목업 + 모달 시트 90.4% / max 339px 중앙 */
+
+.modal-preview-device {
+  width: 375px;
+  height: 680px;
+  background: #000;
+  border-radius: 40px;
+  padding: 12px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.modal-preview-notch {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 28px;
+  background: #000;
+  border-radius: 0 0 16px 16px;
+  z-index: 5;
+}
+
+.modal-preview-screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.modal-preview-backdrop {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #f0f4f8 0%, #dfe6ed 100%);
+  pointer-events: none;
+}
+
+/**
+ * Basic / Slide / Alarm 공통 모달 컬럼: 뷰 375px 기준 90.4% ≈ 339px, 상한 339px, 가로 중앙
+ */
+.modal-preview-sheet {
+  width: 90.4%;
+  max-width: 339px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+}
+
+/* 슬라이드 스트립: 터치 스크롤 시 스크롤바 숨김 (프리뷰 전용) */
+.modal-preview-slide-strip {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.modal-preview-slide-strip::-webkit-scrollbar {
+  display: none;
+}

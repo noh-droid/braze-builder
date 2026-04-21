@@ -1,0 +1,38 @@
+import { makeNormalize } from "../figma-shared/makeNormalize.js";
+
+export const defaultConfig = {
+  bgOpacity: 70,
+  contentWidth: 339,
+  imageUrl: "/figma-modal-hero.jpg",
+  imageRadius: 14,
+  buttonCount: 2,
+  btnText: "txt1",
+  btnText2: "txt2",
+  btnFont: "Inter",
+  btnWeight: "700",
+  btnSize: 15,
+  btnColor: "#ffffff",
+  btnBgColor: "#eb00ff",
+  btn2Color: "#ffffff",
+  btn2BgColor: "#5700ff",
+  btnHeight: 46,
+  btnRadius: 4,
+  btnGap: 9,
+  btnRowWidth: 339,
+  btnRowPadding: 20,
+  btnOverlayBottom: 0,
+  enableCustomEvent: false,
+  customEventName: "",
+  deeplink: "https://yourapp.com/deeplink",
+  bottomLeftText: "Don't show again",
+  bottomRightText: "Close",
+  bottomColor: "#ffffff",
+  bottomSideMargin: 20,
+  btnTracking: "button",
+  btn2Tracking: "close",
+  bottomLeftTracking: "never show",
+  bottomRightTracking: "close",
+  enableLogClick: true,
+};
+
+export const normalizeFigmaConfig = makeNormalize(defaultConfig);
