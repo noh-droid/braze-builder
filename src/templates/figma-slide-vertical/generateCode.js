@@ -50,6 +50,9 @@ export function generateCode(c) {
       max-width: ${MODAL_MAX_WIDTH}px;
       position: absolute;
       top: 50%; left: 50%; transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
     }
     .card {
       background: ${c.cardBg ?? "#ffffff"};
@@ -58,12 +61,13 @@ export function generateCode(c) {
       padding: ${s(c.cardPaddingTop ?? 14)}px ${padX}px ${s(c.cardPaddingBottom ?? 20)}px;
     }
     .slide_vp {
-      width: ${s(sw)}px; max-width: 100%;
+      width: 100%;
       margin: 0 auto;
       height: ${s(sh)}px;
       overflow: hidden;
       border-radius: ${s(c.slideRadius ?? 4)}px;
       position: relative;
+      container-type: inline-size;
     }
     .slide_strip {
       display: flex;
@@ -73,9 +77,13 @@ export function generateCode(c) {
       overflow-y: hidden;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
+    .slide_strip::-webkit-scrollbar { display: none; }
     .slide_strip img {
-      width: ${s(sw)}px;
+      width: min(${s(sw)}px, calc(100cqi - ${s(26)}px));
+      flex: 0 0 min(${s(sw)}px, calc(100cqi - ${s(26)}px));
       height: ${s(sh)}px;
       object-fit: cover;
       flex-shrink: 0;
@@ -96,7 +104,7 @@ export function generateCode(c) {
     .pager .sep, .pager .tot { color: #828282; }
     .title {
       text-align: center;
-      margin-top: ${s(12)}px;
+      margin-top: ${s(10)}px;
       font-family: Inter, sans-serif;
       font-weight: 700;
       font-size: ${s(c.titleSize ?? 20) / 16}rem;
@@ -105,7 +113,7 @@ export function generateCode(c) {
     }
     .sub {
       text-align: center;
-      margin-top: ${s(6)}px;
+      margin-top: ${s(4)}px;
       font-family: Inter, sans-serif;
       font-size: ${s(c.subtitleSize ?? 13) / 16}rem;
       color: ${c.subtitleColor ?? "#000"};
@@ -129,8 +137,12 @@ export function generateCode(c) {
     .bottom_wrapper {
       display: flex; justify-content: space-between;
       align-items: center;
-      margin-top: 0;
-      padding-top: 0;
+      margin-top: ${s(10)}px;
+      padding: ${s(4)}px ${padX}px 0;
+      padding-left: ${padX + s(2)}px;
+      padding-right: ${padX + s(4)}px;
+      background: transparent;
+      box-sizing: border-box;
     }
     .bottom_wrapper button {
       background: none;
@@ -156,12 +168,12 @@ export function generateCode(c) {
         <div class="cta_wrap">
           <button type="button" class="cta button_text">${escapeHtml(c.btnText)}</button>
         </div>
-        <div class="bottom_wrapper">
-          <button type="button" class="style01">${escapeHtml(c.bottomLeftText)}</button>
-          <div style="display:flex;align-items:center;gap:${s(4)}px;">
-            <button type="button" class="style02">${escapeHtml(c.bottomRightText)}</button>
-            <span class="material-icons" style="font-size:${s(18)}px;color:${c.bottomColor}">close</span>
-          </div>
+      </div>
+      <div class="bottom_wrapper">
+        <button type="button" class="style01">${escapeHtml(c.bottomLeftText)}</button>
+        <div style="display:flex;align-items:center;gap:${s(4)}px;">
+          <button type="button" class="style02">${escapeHtml(c.bottomRightText)}</button>
+          <span class="material-icons" style="font-size:${s(18)}px;color:${c.bottomColor}">close</span>
         </div>
       </div>
     </div>

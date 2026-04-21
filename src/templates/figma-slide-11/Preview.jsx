@@ -30,9 +30,12 @@ export default function FigmaSlide11Preview({ config }) {
   const urls = rawUrls.length > 0 ? rawUrls : [PLACEHOLDER];
   const n = urls.length;
 
-  const { stripRef, index: i, scrollToIndex } = useSlideStripCarousel({
+  const g = s(10);
+  const peekPx = s(28);
+
+  const { stripRef, index: i } = useSlideStripCarousel({
     slideCount: n,
-    gapPx: 0,
+    gapPx: g,
     autoPlay: config.slideAutoPlay ?? false,
     autoPlayMs: config.slideAutoPlayMs ?? 3000,
   });
@@ -61,6 +64,7 @@ export default function FigmaSlide11Preview({ config }) {
                 borderRadius: `${radius}px`,
                 overflow: "hidden",
                 background: "#0f172a",
+                containerType: "inline-size",
               }}
             >
               <div
@@ -74,6 +78,7 @@ export default function FigmaSlide11Preview({ config }) {
                   className="modal-preview-slide-strip"
                   style={{
                     display: "flex",
+                    gap: `${g}px`,
                     height: "100%",
                     width: "100%",
                     overflowX: "auto",
@@ -90,12 +95,13 @@ export default function FigmaSlide11Preview({ config }) {
                       src={u}
                       alt=""
                       style={{
-                        flex: "0 0 100%",
-                        width: "100%",
+                        flex: `0 0 min(100%, calc(100cqi - ${peekPx}px))`,
+                        width: `min(100%, calc(100cqi - ${peekPx}px))`,
                         height: "100%",
                         objectFit: "cover",
                         display: "block",
                         scrollSnapAlign: "start",
+                        borderRadius: 0,
                       }}
                       onError={(e) => {
                         e.target.src = PLACEHOLDER;
@@ -127,47 +133,13 @@ export default function FigmaSlide11Preview({ config }) {
               </div>
             </div>
 
-            {n > 1 && (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: `${s(8)}px`,
-                  marginTop: `${s(8)}px`,
-                }}
-              >
-                <button
-                  type="button"
-                  onClick={() => scrollToIndex(i - 1)}
-                  style={{
-                    padding: `${s(4)}px ${s(8)}px`,
-                    fontSize: `${s(11)}px`,
-                    cursor: "pointer",
-                    borderRadius: `${s(6)}px`,
-                    border: "1px solid #e2e8f0",
-                    background: "#fff",
-                  }}
-                >
-                  ‹
-                </button>
-                <button
-                  type="button"
-                  onClick={() => scrollToIndex(i + 1)}
-                  style={{
-                    padding: `${s(4)}px ${s(8)}px`,
-                    fontSize: `${s(11)}px`,
-                    cursor: "pointer",
-                    borderRadius: `${s(6)}px`,
-                    border: "1px solid #e2e8f0",
-                    background: "#fff",
-                  }}
-                >
-                  ›
-                </button>
-              </div>
-            )}
-
-            <div style={modalPreviewBottomFootRowStyle}>
+            <div
+              style={{
+                ...modalPreviewBottomFootRowStyle,
+                marginTop: `${s(12)}px`,
+                background: "transparent",
+              }}
+            >
               <span
                 style={modalPreviewBottomFootLeftStyle(
                   config.bottomColor,

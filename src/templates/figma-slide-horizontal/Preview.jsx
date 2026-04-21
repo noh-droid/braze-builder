@@ -48,6 +48,8 @@ export default function FigmaSlideHorizontalPreview({ config }) {
     autoPlayMs: config.slideAutoPlayMs ?? 3000,
   });
 
+  const peekPx = s(28);
+
   return (
     <ModalPreviewDevice>
       <ModalPreviewNotch />
@@ -59,23 +61,31 @@ export default function FigmaSlideHorizontalPreview({ config }) {
               width: `${cardW}px`,
               maxWidth: "100%",
               zIndex: 2,
-              background: config.cardBg ?? "#fff",
-              borderRadius: `${s(14)}px`,
-              overflow: "hidden",
-              padding: `${padT}px ${padX}px ${padB}px`,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "stretch",
               boxSizing: "border-box",
             }}
           >
-            <div style={{ position: "relative", width: "100%" }}>
+            <div
+              style={{
+                background: config.cardBg ?? "#fff",
+                borderRadius: `${s(14)}px`,
+                overflow: "hidden",
+                padding: `${padT}px ${padX}px ${padB}px`,
+                boxSizing: "border-box",
+              }}
+            >
+              <div style={{ position: "relative", width: "100%" }}>
               <div
                 style={{
-                  width: `${sW}px`,
-                  maxWidth: "100%",
+                  width: "100%",
                   margin: "0 auto",
                   height: `${sH}px`,
                   overflow: "hidden",
                   borderRadius: `${slideR}px`,
                   position: "relative",
+                  containerType: "inline-size",
                 }}
               >
                 <div
@@ -99,7 +109,8 @@ export default function FigmaSlideHorizontalPreview({ config }) {
                       src={u}
                       alt=""
                       style={{
-                        width: `${sW}px`,
+                        width: `min(${sW}px, calc(100cqi - ${peekPx}px))`,
+                        flex: `0 0 min(${sW}px, calc(100cqi - ${peekPx}px))`,
                         height: `${sH}px`,
                         objectFit: "cover",
                         flexShrink: 0,
@@ -131,35 +142,47 @@ export default function FigmaSlideHorizontalPreview({ config }) {
                   <span style={{ color: "#828282" }}>{n}</span>
                 </div>
               </div>
-            </div>
+              </div>
 
-            <div
+              <div
               style={{
-                textAlign: "center",
-                marginTop: `${s(12)}px`,
-                color: config.titleColor ?? "#000",
-                fontWeight: "700",
-                fontSize: `${titleSz}px`,
-                lineHeight: 1.3,
-                fontFamily: "Inter, Pretendard, sans-serif",
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginTop: `${s(10)}px`,
+                gap: `${s(4)}px`,
+                boxSizing: "border-box",
               }}
             >
-              {config.titleText}
-            </div>
-            <div
-              style={{
-                textAlign: "center",
-                marginTop: `${s(6)}px`,
-                color: config.subtitleColor ?? "#000",
-                fontSize: `${subSz}px`,
-                lineHeight: 1.45,
-                fontFamily: "Inter, Pretendard, sans-serif",
-              }}
-            >
-              {config.subtitleText}
-            </div>
+              <div
+                style={{
+                  textAlign: "center",
+                  width: "100%",
+                  color: config.titleColor ?? "#000",
+                  fontWeight: "700",
+                  fontSize: `${titleSz}px`,
+                  lineHeight: 1.3,
+                  fontFamily: "Inter, Pretendard, sans-serif",
+                }}
+              >
+                {config.titleText}
+              </div>
+              <div
+                style={{
+                  textAlign: "center",
+                  width: "100%",
+                  color: config.subtitleColor ?? "#000",
+                  fontSize: `${subSz}px`,
+                  lineHeight: 1.45,
+                  fontFamily: "Inter, Pretendard, sans-serif",
+                }}
+              >
+                {config.subtitleText}
+              </div>
+              </div>
 
-            <div
+              <div
               style={{
                 width: "100%",
                 boxSizing: "border-box",
@@ -185,11 +208,16 @@ export default function FigmaSlideHorizontalPreview({ config }) {
                 {config.btnText}
               </div>
             </div>
+            </div>
 
             <div
               style={{
                 ...modalPreviewBottomFootRowStyle,
-                padding: `0 4px 10px 2px`,
+                marginTop: `${s(10)}px`,
+                padding: `${s(4)}px ${padX}px 0`,
+                paddingLeft: `${padX + 2}px`,
+                paddingRight: `${padX + 4}px`,
+                background: "transparent",
                 boxSizing: "border-box",
               }}
             >

@@ -15,7 +15,9 @@ export function generateCode(c) {
   const aw = c.imageAspectW ?? 339;
   const ah = c.imageAspectH ?? 342;
   const bottomSide = c.bottomSideMargin ?? 20;
-  const mtBottom = s(8);
+  const slideGap = s(10);
+  const peekCqi = s(28);
+  const mtBottom = s(12);
   const iconClose = s(20);
   const pb = Math.max(s(4), s(6));
   const pr = Math.max(s(4), s(6));
@@ -63,6 +65,7 @@ export function generateCode(c) {
       aspect-ratio: ${aw} / ${ah};
       border-radius: ${s(c.imageRadius ?? 14)}px;
       overflow: hidden;
+      container-type: inline-size;
     }
     .slide_vp {
       position: absolute;
@@ -70,16 +73,20 @@ export function generateCode(c) {
     }
     .slide_strip {
       display: flex;
+      gap: ${slideGap}px;
       width: 100%;
       height: 100%;
       overflow-x: auto;
       overflow-y: hidden;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
+    .slide_strip::-webkit-scrollbar { display: none; }
     .slide_strip .hero_img {
-      flex: 0 0 100%;
-      width: 100%;
+      flex: 0 0 min(100%, calc(100cqi - ${peekCqi}px));
+      width: min(100%, calc(100cqi - ${peekCqi}px));
       height: 100%;
       object-fit: cover;
       display: block;
@@ -104,6 +111,7 @@ export function generateCode(c) {
       display: flex; justify-content: space-between;
       align-items: center; margin-top: ${mtBottom}px;
       padding-left: ${s(bottomSide)}px; padding-right: ${s(bottomSide)}px;
+      background: transparent;
     }
     .bottom_wrapper .style01 {
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -152,7 +160,7 @@ export function generateCode(c) {
       if (!strip || !pager) return;
       var imgs = strip.querySelectorAll(".hero_img");
       var n = imgs.length;
-      var gapPx = 0;
+      var gapPx = ${slideGap};
       var curEl = pager.querySelector(".cur");
       var totEl = pager.querySelector(".tot");
       function upd() {
